@@ -1,8 +1,24 @@
-document.write("test");
+document.write("test\n");
+alert("test1");
 
-$.getJSON("https://3fdad485-b06b-4050-b67b-ad864dfeb7ee-bluemix.cloudant.com/ahudata/_all_docs", function(jsondata) {
+function get_json(url, callback) {
+    http.get(url, function(res) {
+        var body = '';
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+
+        res.on('end', function() {
+            var response = JSON.parse(body);
+// call function ----v
+            callback(response);
+        });
+    });
+}
+
+get_json("https://3fdad485-b06b-4050-b67b-ad864dfeb7ee-bluemix.cloudant.com/ahudata/_all_docs", function(jsondata) {
 	document.write("test1");
-	document.write("data");
+	alert(jsondata);
 });
 document.write("test2");
 d3.select("body")
